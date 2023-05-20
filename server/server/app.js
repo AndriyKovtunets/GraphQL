@@ -3,6 +3,7 @@ const { graphqlHTTP } = require('express-graphql')
 const mongoose = require('mongoose')
 const chalk = require('chalk')
 require('dotenv').config()
+const cors = require('cors')
 
 const schema = require('../schema/schema')
 
@@ -18,10 +19,12 @@ mongoose
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
-	.then(res => console.log(successMsg('Connected to DB')))
+	.then(res => console.log(successMsg('💾 Connected to DB')))
 	.catch(error => console.log(errorMsg(error)))
 
-app.use('/graphql', graphqlHTTP({ schema, graphiql: true }))
+app.use(cors())
+
+app.use('/graphql', graphqlHTTP({ schema, graphql: true }))
 
 app.get('/', (req, res) => {
 	res.send('hello world')
